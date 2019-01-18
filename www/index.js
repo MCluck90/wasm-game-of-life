@@ -123,6 +123,18 @@ ticksPerFrameEl.addEventListener('input', _ => {
 	ticksPerFrame = ticksPerFrameEl.value;
 });
 
+document.getElementById('clear').addEventListener('click', _ => {
+	universe.set_width(universe.width());
+	drawGrid();
+	drawCells();
+});
+
+document.getElementById('new').addEventListener('click', _ => {
+	universe.randomize_cells();
+	drawGrid();
+	drawCells();
+});
+
 drawGrid();
 drawCells();
 pause();

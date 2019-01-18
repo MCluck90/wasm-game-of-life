@@ -95,7 +95,18 @@ impl Universe {
         let width = 64;
         let height = 64;
 
-        let cells = (0..width * height)
+        let mut universe = Universe {
+            width,
+            height,
+            cells: Vec::new(),
+        };
+
+        universe.randomize_cells();
+        universe
+    }
+
+    pub fn randomize_cells(&mut self) {
+        self.cells = (0..self.width * self.height)
             .map(|_| {
                 if js_sys::Math::random() < 0.5 {
                     Cell::Alive
@@ -104,12 +115,6 @@ impl Universe {
                 }
             })
             .collect();
-
-        Universe {
-            width,
-            height,
-            cells,
-        }
     }
 
     pub fn tick(&mut self) {
