@@ -1,12 +1,20 @@
 extern crate cfg_if;
 extern crate js_sys;
 extern crate wasm_bindgen;
+extern crate web_sys;
 
 mod utils;
 
 use cfg_if::cfg_if;
 use std::fmt;
 use wasm_bindgen::prelude::*;
+
+// A macro to prive `println!(...)`-style syntax for `console.log` logging.
+macro_rules! log {
+    ($($t:tt)*) => {
+        web_sys::console::log_1(&format!($($t)*).into());
+    };
+}
 
 cfg_if! {
     // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
@@ -73,6 +81,8 @@ impl Universe {
 #[wasm_bindgen]
 impl Universe {
     pub fn new() -> Universe {
+        utils::set_panic_hook();
+        log!("Initializing universe...");
         let width = 64;
         let height = 64;
 
