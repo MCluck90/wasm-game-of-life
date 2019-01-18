@@ -186,6 +186,28 @@ impl Universe {
         let idx = self.get_index(row, column);
         self.cells[idx].toggle();
     }
+
+    /// Create a glider centered around a point.
+    pub fn create_glider(&mut self, row: u32, column: u32) {
+        let idx = self.get_index(row - 1, column - 1);
+        self.cells[idx] = Cell::Dead;
+        let idx = self.get_index(row - 1, column);
+        self.cells[idx] = Cell::Alive;
+        let idx = self.get_index(row - 1, column + 1);
+        self.cells[idx] = Cell::Dead;
+        let idx = self.get_index(row, column - 1);
+        self.cells[idx] = Cell::Dead;
+        let idx = self.get_index(row, column);
+        self.cells[idx] = Cell::Dead;
+        let idx = self.get_index(row, column + 1);
+        self.cells[idx] = Cell::Alive;
+        let idx = self.get_index(row + 1, column - 1);
+        self.cells[idx] = Cell::Alive;
+        let idx = self.get_index(row + 1, column);
+        self.cells[idx] = Cell::Alive;
+        let idx = self.get_index(row + 1, column + 1);
+        self.cells[idx] = Cell::Alive;
+    }
 }
 
 impl fmt::Display for Universe {
