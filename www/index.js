@@ -6,7 +6,9 @@ const GRID_COLOR = '#CCCCCC';
 const DEAD_COLOR = '#FFFFFF';
 const ALIVE_COLOR = '#000000';
 
+const ticksPerFrameEl = document.getElementById('ticks-per-frame');
 let animationId = null;
+let ticksPerFrame = ticksPerFrameEl.value;
 
 // Construct the universe, and get its width and height
 const universe = Universe.new();
@@ -22,7 +24,9 @@ canvas.width = (CELL_SIZE + 1) * width + 1;
 const ctx = canvas.getContext('2d');
 
 const renderLoop = () => {
-	universe.tick();
+	for (let i = 0; i < ticksPerFrame; i++) {
+		universe.tick();
+	}
 
 	drawGrid();
 	drawCells();
@@ -113,6 +117,10 @@ canvas.addEventListener('click', event => {
 
 	drawGrid();
 	drawCells();
+});
+
+ticksPerFrameEl.addEventListener('input', _ => {
+	ticksPerFrame = ticksPerFrameEl.value;
 });
 
 drawGrid();
